@@ -8,7 +8,7 @@ import {
 import { motion } from "framer-motion";
 
 export const StyledSection = styled(motion.div)`
-  height: calc(100vh - ${headerHeight});
+  min-height: calc(100vh - ${headerHeight});
   background-color: ${theme.black};
   padding: ${verticalPadding} ${horizontalPadding};
   display: flex;

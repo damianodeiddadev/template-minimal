@@ -1,15 +1,31 @@
 import Head from "next/head";
-import Header from "../components/Header";
 import SectionContainer from "../containers/SectionContainer";
 import PageContainer from "../containers/PageContainer";
 import Text from "../components/Text";
 import { theme } from "../assets/theme";
-import Navigation from "../components/Navigation";
-import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
+
+import { AnimatePresence, useAnimation, motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import ImageContainer from "../components/Image";
+import example2 from "../assets/images/example2.jpg";
 
 export default function Home() {
   const heroTextArray = ["WE TRANSFORM", "IDEAS INTO DIGITAL", "EXPERIENCES"];
+
+  const animation = useAnimation();
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    rootMargin: "-300px",
+  });
+
+  useEffect(() => {
+    if (inView) {
+      animation.start("visible");
+      console.log("trigger");
+    }
+  }, [animation, inView]);
 
   const container = {
     hidden: { opacity: 1 },
@@ -30,6 +46,20 @@ export default function Home() {
       y: 0,
       opacity: 1,
       skew: 0,
+    },
+  };
+
+  const textVariant = {
+    hidden: { y: 5, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+    transition: {
+      delayChildren: 0.3,
+      staggerChildren: 0.3,
+      duration: 3,
+      ease: [0.9, 0.8, 0.0, 0.4],
     },
   };
 
@@ -61,7 +91,42 @@ export default function Home() {
               );
             })}
           </SectionContainer>
-          <SectionContainer></SectionContainer>
+          <SectionContainer
+            alignItems="right"
+            justifyContent="flex-start"
+            flexDirection="column"
+          >
+            <motion.div
+              ref={ref}
+              animate={animation}
+              initial="hidden"
+              variants={textVariant}
+            >
+              <Text
+                fontSize="2.5rem"
+                margin="1rem 0"
+                text="We are an award-winning strategic design company that provides consultancy services worldwide."
+                color={theme.colors.black}
+                maxWidth="60%"
+                textTransform="uppercase"
+              />
+              <Text
+                fontSize="2rem"
+                margin="1rem 0"
+                text="
+                Our team consists of a superb blend of thinkers, strategists, designers, researchers, developers and organisers."
+                color={theme.colors.black}
+                maxWidth="50%"
+              />
+            </motion.div>
+
+            <ImageContainer
+              src={example2}
+              width={"100%"}
+              height={800}
+              alt="example image"
+            />
+          </SectionContainer>
         </AnimatePresence>
       </PageContainer>
     </div>

@@ -8,6 +8,7 @@ export const NavigationWrapper = styled(motion.div)`
   top: 0;
   left: 0;
   width: 100vw;
+  height: 100vh;
   background-color: ${theme.colors.black};
   z-index: 99;
 `;
@@ -32,13 +33,13 @@ export const NavigationContainer = styled.div`
 export const NavigationSection = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   height: calc(100vh - ${headerHeight});
   padding: 10rem 3rem;
 `;
 
 export const NavigationLink = styled(motion.div)`
-  padding: 2rem 0;
+  padding-bottom: 2rem;
   font-size: 2.5rem;
   text-transform: uppercase;
 
